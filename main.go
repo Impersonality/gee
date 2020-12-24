@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"gee/gee"
 	http "net/http"
 )
@@ -8,8 +9,9 @@ import (
 func main() {
 	r := gee.New()
 
-	r.Get("/hello", func(c *gee.Context) {
-		c.String(http.StatusOK, "hello world")
+	r.Get("/hello/:name", func(c *gee.Context) {
+		c.String(http.StatusOK, "hello %s", c.Param("name"))
 	})
 	r.Run(":3773")
+	fmt.Println(r)
 }

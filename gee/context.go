@@ -11,6 +11,7 @@ type Context struct {
 	R          *http.Request
 	Path       string
 	Method     string
+	Params     map[string]string
 	StatusCode int
 }
 
@@ -44,4 +45,9 @@ func (c *Context) String(code int, format string, values ...interface{}) {
 	c.SetStatus(code)
 	c.SetHeader("Content-Type", "text/plain")
 	c.W.Write([]byte(fmt.Sprintf(format, values...)))
+}
+
+func (c *Context) Param(key string) string {
+	value, _ := c.Params[key]
+	return value
 }
